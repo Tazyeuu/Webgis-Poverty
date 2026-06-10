@@ -39,6 +39,9 @@ class Database {
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
+            // Disable strict mode for GROUP BY to prevent 1055 errors in Coolify's MariaDB
+            self::$conn->exec("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+
             // Auto-initialize database if empty
             $stmt = self::$conn->query("SHOW TABLES LIKE 'users'");
             if ($stmt->rowCount() == 0) {
