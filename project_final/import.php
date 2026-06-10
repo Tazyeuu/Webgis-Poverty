@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/config/app.php';
 
-$host = env('DB_HOST', 'localhost');
-$port = env('DB_PORT', 3306);
-$user = env('DB_USERNAME', 'root');
-$pass = env('DB_PASSWORD', '');
-$db = env('DB_DATABASE', 'webgis_db');
+$host = getenv('DB_HOST') ?: 'localhost';
+$port = getenv('DB_PORT') ?: 3306;
+$user = getenv('DB_USERNAME') ?: 'root';
+$pass = getenv('DB_PASSWORD') ?: '';
+$db = getenv('DB_DATABASE') ?: 'webgis_db';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4", $user, $pass);
