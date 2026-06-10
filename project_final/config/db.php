@@ -28,6 +28,16 @@ class Database {
             );
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+            // Auto-initialize database if empty
+            $stmt = self::$conn->query("SHOW TABLES LIKE 'users'");
+            if ($stmt->rowCount() == 0) {
+                $sqlFile = __DIR__ . '/../../database/webgis_db.sql';
+                if (file_exists($sqlFile)) {
+                    $sql = file_get_contents($sqlFile);
+                    self::$conn->exec($sql);
+                }
+            }
         }
         return self::$conn;
     }
