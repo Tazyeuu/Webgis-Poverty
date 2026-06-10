@@ -15,11 +15,21 @@ class Database {
 
     public static function getConnection() {
         if (self::$conn === null) {
-            $host = self::env('DB_HOST', '127.0.0.1');
-            $port = self::env('DB_PORT', '3306');
-            $dbName = self::env('DB_DATABASE', 'webgis_db');
-            $username = self::env('DB_USERNAME', 'root');
-            $password = self::env('DB_PASSWORD', '');
+            $dbUrl = self::env('DATABASE_URL');
+            if ($dbUrl) {
+                $parsed = parse_url($dbUrl);
+                $host = $parsed['host'] ?? '127.0.0.1';
+                $port = $parsed['port'] ?? '3306';
+                $username = $parsed['user'] ?? 'root';
+                $password = $parsed['pass'] ?? '';
+                $dbName = ltrim($parsed['path'], '/');
+            } else {
+                $host = self::env('DB_HOST', '127.0.0.1');
+                $port = self::env('DB_PORT', '3306');
+                $dbName = self::env('DB_DATABASE', 'webgis_db');
+                $username = self::env('DB_USERNAME', 'root');
+                $password = self::env('DB_PASSWORD', '');
+            }
 
             self::$conn = new PDO(
                 "mysql:host={$host};port={$port};dbname={$dbName};charset=utf8mb4",
