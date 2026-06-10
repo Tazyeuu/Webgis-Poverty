@@ -9,6 +9,7 @@ COPY 02/ /var/www/html/02/
 COPY 03/ /var/www/html/03/
 COPY final/ /var/www/html/final/
 COPY project_final/ /var/www/html/project_final/
+COPY database/ /var/www/html/database/
 
 RUN chown -R www-data:www-data /var/www/html
 

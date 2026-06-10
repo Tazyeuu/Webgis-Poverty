@@ -4,11 +4,7 @@
 -- Import file ini jika ingin membuat ulang database dari awal.
 -- Perhatian: tabel lama dengan nama yang sama akan dihapus.
 
-CREATE DATABASE IF NOT EXISTS webgis_db
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
-USE webgis_db;
+-- Database selected via connection string
 
 SET FOREIGN_KEY_CHECKS = 0;
 
