@@ -1,0 +1,53 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local deliverables / work notes
+MANUAL_BOOK.docx
+PRESENTASI.pptx
+NEXT_WORK_SUMMARY.md
+PROJECT_PROGRESS_SUMMARY.md
+
+# Environment / local config
+.env
+.env.*
+!.env.example
+project_final/config/db.local.php
+project_final/config/*.local.php
+
+# PHP / Composer
+vendor/
+
+# Node / frontend packages
+node_modules/
+
+# Logs / cache / temp
+*.log
+logs/
+cache/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# Runtime uploads
+uploads/*
+project_final/uploads/*
+!uploads/.gitkeep
+!project_final/uploads/.gitkeep
+
+# Generated backups / exports
+database/backups/
+database/*backup*.sql
+database/*_backup.sql
+*.sql.gz
+*.dump
+
+# Test / build output
+coverage/
+dist/
+build/

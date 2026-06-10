@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal WebGIS - Sistem Informasi Geografis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            /* Matching project_final/main.css */
+            --primary:        #2563EB;
+            --primary-light:  #3B82F6;
+            --primary-dark:   #1D4ED8;
+            --accent:         #10B981;
+            --bg-base:        #F9FAFB;
+            --bg-surface:     #FFFFFF;
+            --border-light:   #E5E7EB;
+            --border-hover:   #D1D5DB;
+            --text-primary:   #111827;
+            --text-secondary: #4B5563;
+            --text-muted:     #6B7280;
+            --radius-md:      8px;
+            --radius-lg:      12px;
+            --radius-xl:      16px;
+            --shadow-sm:      0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md:      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg:      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition:     all 0.2s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .navbar {
+            width: 100%;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-light);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 50px;
+            animation: slideDown 0.4s ease-out;
+            padding: 0 20px;
+        }
+
+        .header-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            background: #EFF6FF;
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 1000px;
+            padding: 0 24px 60px 24px;
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-hover);
+        }
+
+        .card-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .card:nth-child(1) .card-icon-wrap { background: #EFF6FF; color: var(--primary); }
+        .card:nth-child(2) .card-icon-wrap { background: #ECFDF5; color: var(--accent); }
+        .card:nth-child(3) .card-icon-wrap { background: #FEF2F2; color: #EF4444; }
+        
+        .card-number {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .card-footer i {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover .card-footer {
+            color: var(--primary-dark);
+        }
+
+        .card:hover .card-footer i {
+            transform: translateX(4px);
+        }
+
+        /* Final Card styling */
+        .card.final {
+            background: var(--primary);
+            border: 1px solid var(--primary-dark);
+            color: white;
+        }
+        
+        .card.final .card-icon-wrap {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .card.final .card-number {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card.final .card-title {
+            color: white;
+        }
+
+        .card.final .card-desc {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card.final .card-footer {
+            color: white;
+        }
+
+        .card.final:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            background: var(--primary-dark);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-map-marked-alt"></i>
+            WebGIS Portal
+        </div>
+    </nav>
+
+    <header class="header">
+        <div class="header-icon">
+            <i class="fas fa-globe-asia"></i>
+        </div>
+        <h1>Sistem Informasi Geografis</h1>
+        <p>Direktori tugas dan proyek akhir mata kuliah Sistem Informasi Geografis. Pilih modul pembelajaran di bawah ini untuk memulai.</p>
+    </header>
+
+    <div class="grid-container">
+        
+        <!-- Pertemuan 01 -->
+        <a href="01/frontend/" class="card" style="animation-delay: 0.1s;">
+            <div class="card-icon-wrap">
+                <i class="fas fa-draw-polygon"></i>
+            </div>
+            <div class="card-number">Pertemuan 01</div>
+            <h2 class="card-title">Geometri Dasar</h2>
+            <p class="card-desc">Fitur menggambar peta dasar dan CRUD spasial.</p>
+            <div class="card-footer">
+                Buka Modul <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <!-- Pertemuan 02 -->
+        <a href="02/frontend/" class="card" style="animation-delay: 0.15s;">
+            <div class="card-icon-wrap">
+                <i class="fas fa-route"></i>
+            </div>
+            <div class="card-number">Pertemuan 02</div>
+            <h2 class="card-title">Haversine & Tematik</h2>
+            <p class="card-desc">Pemetaan sosial dan query pencarian radius jarak.</p>
+            <div class="card-footer">
+                Buka Modul <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <!-- Pertemuan 03 -->
+        <a href="03/frontend/" class="card" style="animation-delay: 0.2s;">
+            <div class="card-icon-wrap">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="card-number">Pertemuan 03</div>
+            <h2 class="card-title">Analisis Spasial</h2>
+            <p class="card-desc">Visualisasi Peta Choropleth dinamis (Point-in-Polygon).</p>
+            <div class="card-footer">
+                Buka Modul <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <!-- Final (UAS) -->
+        <a href="project_final/" class="card final" style="animation-delay: 0.25s;">
+            <div class="card-icon-wrap">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <div class="card-number">Proyek Akhir</div>
+            <h2 class="card-title">Final UAS</h2>
+            <p class="card-desc">Sistem komprehensif untuk evaluasi akhir semester.</p>
+            <div class="card-footer">
+                Buka Aplikasi <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+    </div>
+
+</body>
+</html>

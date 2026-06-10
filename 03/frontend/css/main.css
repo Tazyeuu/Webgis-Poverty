@@ -1,0 +1,205 @@
+:root {
+    --primary: #6366F1;
+    --primary-hover: #4F46E5;
+    --bg-dark: #0F172A;
+    --bg-glass: rgba(15, 23, 42, 0.75);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --text-light: #F8FAFC;
+    --text-muted: #94A3B8;
+    --radius: 20px;
+    --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --font: 'Inter', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    background: var(--bg-dark);
+    color: var(--text-light);
+    overflow: hidden;
+}
+
+#map {
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+/* Floating Dock */
+.floating-dock {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 1000;
+    background: var(--bg-glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    padding: 24px;
+    width: 340px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Dock */
+.floating-dock::-webkit-scrollbar { width: 6px; }
+.floating-dock::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+.header h2 { margin: 0 0 8px 0; font-size: 1.4rem; font-weight: 700; background: linear-gradient(135deg, #818CF8, #C084FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.header p { margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Buttons */
+.menu-group { display: flex; flex-direction: column; gap: 10px; }
+.menu-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+
+.btn-action {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-light);
+    padding: 14px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: var(--font);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.btn-action svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+.btn-action:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.btn-action.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+}
+
+/* Button Variants */
+.btn-spbu svg { color: #10B981; }
+.btn-jalan svg { color: #F59E0B; }
+.btn-kavling svg { color: #3B82F6; }
+.btn-rumah svg { color: #8B5CF6; }
+.btn-warga svg { color: #EF4444; }
+
+/* Form Panel */
+.form-panel {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid var(--border-glass);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 0.8rem; color: var(--text-muted); }
+.form-control {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: white;
+    font-family: var(--font);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.2s;
+}
+.form-control:focus { border-color: var(--primary); }
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.checkbox-group input { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+.checkbox-group span { font-size: 0.85rem; color: var(--text-light); }
+
+.btn-submit {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-submit:hover { background: var(--primary-hover); }
+
+/* Leaflet Customizations */
+.leaflet-draw-toolbar { display: none !important; }
+.leaflet-control-zoom { border: none !important; box-shadow: var(--shadow) !important; }
+.leaflet-control-zoom a {
+    background: var(--bg-glass) !important;
+    color: var(--text-light) !important;
+    border-color: var(--border-glass) !important;
+    backdrop-filter: blur(10px);
+}
+.leaflet-control-zoom a:hover { background: var(--primary) !important; }
+
+/* Leaflet Popup Premium */
+.leaflet-popup-content-wrapper {
+    background: var(--bg-glass) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid var(--border-glass) !important;
+    color: var(--text-light) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--shadow) !important;
+}
+.leaflet-popup-tip { background: var(--bg-glass) !important; border: 1px solid var(--border-glass) !important; }
+.leaflet-popup-content { margin: 16px !important; font-family: var(--font); }
+.leaflet-popup-content h3 { margin: 0 0 8px 0; font-size: 1.1rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 8px; }
+.leaflet-popup-content p { margin: 4px 0; font-size: 0.9rem; color: var(--text-muted); }
+.leaflet-popup-content .btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 12px;
+    width: 100%;
+    transition: all 0.2s;
+}
+.leaflet-popup-content .btn-delete:hover { background: #EF4444; color: white; }
+
+/* Custom Map Marker Icon Animation */
+.custom-icon div {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.custom-icon:hover div {
+    transform: scale(1.1) translateY(-4px);
+}
+
+/* Toast Notification */
+.toast-container {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+    display: flex; flex-direction: column; gap: 10px;
+}
+.toast {
+    background: var(--bg-glass); backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass); border-left: 4px solid var(--primary);
+    padding: 16px 20px; border-radius: 12px; color: white; font-size: 0.9rem;
+    box-shadow: var(--shadow); animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toast.error { border-left-color: #EF4444; }
+.toast.success { border-left-color: #10B981; }
+
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }

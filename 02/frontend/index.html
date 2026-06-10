@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGIS - Pertemuan 02</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .result-item { background: rgba(255,255,255,0.05); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; }
+        .badge { background: var(--primary); padding: 2px 6px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; color: white; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="floating-dock">
+        <div class="header">
+            <h2>P02: Tematik & Jarak</h2>
+            <p>Kumulatif P01 + Analisis radius jarak Haversine.</p>
+        </div>
+
+        <div class="menu-group">
+            <div class="menu-title">Entitas Dasar (P01)</div>
+            <button id="btn-draw-spbu" class="btn-action btn-spbu"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.242-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Tambah SPBU</button>
+            <button id="btn-draw-jalan" class="btn-action btn-jalan"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Tambah Jalan</button>
+            <button id="btn-draw-kavling" class="btn-action btn-kavling"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg> Tambah Kavling</button>
+        </div>
+
+        <div class="menu-group" style="margin-top: 5px;">
+            <div class="menu-title">Entitas Sosial (P02)</div>
+            <button id="btn-draw-rumah" class="btn-action btn-rumah"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Tambah Rumah Ibadah</button>
+            <button id="btn-draw-warga" class="btn-action btn-warga"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> Tambah Warga Miskin</button>
+        </div>
+
+        <div id="instruction-panel" class="form-panel" style="margin-top: 5px;">
+            <h3 style="margin:0 0 5px 0; font-size:0.9rem; color:var(--text-main);">Analisis Jarak</h3>
+            <p style="font-size:0.8rem; margin:0 0 10px 0; color:var(--text-muted);">Klik [Cek Radius] di popup Rumah Ibadah mana pun.</p>
+            <div id="radius-results" style="max-height:150px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;"></div>
+        </div>
+
+        <div id="form-container" style="display: none;"></div>
+    </div>
+    <div id="toast-container" class="toast-container"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
