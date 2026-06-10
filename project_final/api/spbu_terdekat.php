@@ -5,7 +5,7 @@ $lat = (float)($_GET['lat'] ?? 0); $lng = (float)($_GET['lng'] ?? 0);
 if (!$lat || !$lng) sendError('lat dan lng wajib diisi');
 $wkt = sprintf('POINT(%F %F)', $lng, $lat);
 $stmt = $pdo->prepare("SELECT id, nama, buka_24_jam, ST_AsGeoJSON(geom) as geojson,
-    ST_Distance_Sphere(geom, ST_GeomFromText(?)) / 1000 as jarak_km
+    ST_Distance_Sphere(ST_SRID(geom, 4326), ST_SRID(ST_GeomFromText(?), 4326)) / 1000 as jarak_km
     FROM spbu ORDER BY jarak_km ASC LIMIT 1");
 $stmt->execute([$wkt]);
 $r = $stmt->fetch();

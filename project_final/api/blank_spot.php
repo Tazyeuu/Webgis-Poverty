@@ -16,9 +16,9 @@ $sql = "
         w.penghasilan,
         ST_AsGeoJSON(w.geom) AS geojson,
         ri.nama AS rumah_ibadah_terdekat,
-        ST_Distance_Sphere(w.geom, ri.geom) AS jarak_meter,
+        ST_Distance_Sphere(ST_SRID(w.geom, 4326), ST_SRID(ri.geom, 4326)) AS jarak_meter,
         ri.radius_bantuan_meter,
-        (ST_Distance_Sphere(w.geom, ri.geom) - ri.radius_bantuan_meter) AS selisih_meter
+        (ST_Distance_Sphere(ST_SRID(w.geom, 4326), ST_SRID(ri.geom, 4326)) - ri.radius_bantuan_meter) AS selisih_meter
     FROM warga_miskin w
     JOIN rumah_ibadah ri
     JOIN (
@@ -28,18 +28,18 @@ $sql = "
         FROM (
             SELECT
                 w2.id AS warga_id,
-                ST_Distance_Sphere(w2.geom, ri2.geom) AS jarak_meter
+                ST_Distance_Sphere(ST_SRID(w2.geom, 4326), ST_SRID(ri2.geom, 4326)) AS jarak_meter
             FROM warga_miskin w2
             CROSS JOIN rumah_ibadah ri2
         ) nearest_distance
         GROUP BY nearest_distance.warga_id
     ) nearest
         ON nearest.warga_id = w.id
-        AND ABS(ST_Distance_Sphere(w.geom, ri.geom) - nearest.min_jarak_meter) < 0.001
+        AND ABS(ST_Distance_Sphere(ST_SRID(w.geom, 4326), ST_SRID(ri.geom, 4326)) - nearest.min_jarak_meter) < 0.001
     WHERE NOT EXISTS (
         SELECT 1
         FROM rumah_ibadah ri_in_radius
-        WHERE ST_Distance_Sphere(w.geom, ri_in_radius.geom) <= ri_in_radius.radius_bantuan_meter
+        WHERE ST_Distance_Sphere(ST_SRID(w.geom, 4326), ST_SRID(ri_in_radius.geom, 4326)) <= ri_in_radius.radius_bantuan_meter
     )
     GROUP BY w.id
     ORDER BY selisih_meter DESC

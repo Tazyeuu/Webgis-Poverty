@@ -32,7 +32,7 @@ $blankCount = $pdo->query("
     WHERE NOT EXISTS (
         SELECT 1
         FROM rumah_ibadah ri
-        WHERE ST_Distance_Sphere(w.geom, ri.geom) <= ri.radius_bantuan_meter
+        WHERE ST_Distance_Sphere(ST_SRID(w.geom, 4326), ST_SRID(ri.geom, 4326)) <= ri.radius_bantuan_meter
     )
 ")->fetch();
 $blankSpot = (int)($blankCount['cnt'] ?? 0);
