@@ -80,11 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <?php endif; ?>
 
-            <div style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:12px; margin-bottom:16px; font-size:0.85rem; color:#1E3A8A;">
-                <strong><i class="fas fa-info-circle"></i> Akun Testing:</strong><br>
-                Admin: <code>admin</code> / <code>admin123</code><br>
-                User: <code>pengguna</code> / <code>user123</code>
-            </div>
 
             <form method="POST" class="auth-form">
                 <div class="form-group">

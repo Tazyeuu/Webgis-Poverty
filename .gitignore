@@ -51,3 +51,5 @@ database/*_backup.sql
 coverage/
 dist/
 build/
+
+akun_testing.txt
